@@ -10,7 +10,6 @@ import com.pawlak.subscription.user.model.User;
 import com.pawlak.subscription.user.model.Role;
 import com.pawlak.subscription.user.repository.UserRepository;
 import com.pawlak.subscription.exception.domain.EmailAlreadyTakenException;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.springframework.security.core.userdetails.UserDetails;
