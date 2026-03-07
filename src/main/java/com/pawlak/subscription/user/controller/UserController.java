@@ -24,19 +24,19 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<UserResponse>> register(@Valid @RequestBody CreateUserRequest request) {
         UserResponse userResponse = userService.register(request);
-        return ResponseEntity.ok(ApiResponse.success("user registered successfully",userResponse, HttpStatus.CREATED));
+        return ResponseEntity.ok(ApiResponse.success("user registered successfully",userResponse));
     }
 
     @GetMapping("/confirm")
     public ResponseEntity<ApiResponse<String>> confirmRegistration(@RequestParam String token) {
         userService.confirmRegistration(token);
-        return ResponseEntity.ok(ApiResponse.success("Account confirmed",null, HttpStatus.OK));
+        return ResponseEntity.ok(ApiResponse.success("Account confirmed"));
     }
 
     @PostMapping("/change-password")
     public ResponseEntity<ApiResponse<String>> changePassword(@AuthenticationPrincipal User user, @Valid @RequestBody ChangePasswordRequest request){
         userService.changePassword(user,request);
-        return ResponseEntity.ok(ApiResponse.success("Password changed",null, HttpStatus.OK));
+        return ResponseEntity.ok(ApiResponse.success("Password changed"));
     }
 
 }
