@@ -1,5 +1,15 @@
 pipeline {
-    agent any
+     agent {
+            docker {
+                image 'maven:3.9.1-eclipse-temurin-21'
+            }
+        }
+        stages {
+            stage('Build JAR') {
+                steps {
+                    sh 'mvn -B clean package -DskipTests'
+                }
+            }
 
     environment {
         IMAGE_NAME = "subscription-spring-app"
