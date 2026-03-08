@@ -17,39 +17,27 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh """
-                docker build -t $IMAGE_NAME:$IMAGE_TAG -f Dockerfile .
-                """
+                sh "docker build -t $IMAGE_NAME:$IMAGE_TAG -f Dockerfile ."
             }
         }
 
         stage('Stop old container') {
             steps {
-                sh """
-                docker stop $CONTAINER_NAME || true
-                docker rm $CONTAINER_NAME || true
-                """
+                sh "docker stop $CONTAINER_NAME || true"
+                sh "docker rm $CONTAINER_NAME || true"
             }
         }
 
         stage('Run container') {
             steps {
-                sh """
-                docker run -d \
-                  --name $CONTAINER_NAME \
-                  --env-file /opt/env/spring.env \
-                  -e SPRING_PROFILES_ACTIVE=prod \
-                  -p 8082:8080 \
-                  $IMAGE_NAME:$IMAGE_TAG
-                """
+                sh "docker run -d --name $CONTAINER_NAME --env-file /opt/env/spring.env -e SPRING_PROFILES_ACTIVE=prod -p 8082:8080 $IMAGE_NAME:$IMAGE_TAG"
             }
         }
 
         stage('Cleanup images') {
             steps {
-                sh 'docker image prune -f'
+                sh "docker image prune -f"
             }
         }
-
     }
 }

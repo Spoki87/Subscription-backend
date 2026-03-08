@@ -1,4 +1,4 @@
-FROM maven:3.9.6-jdk-21 AS build
+FROM maven:3.9.6-jdk-17 AS build
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
@@ -7,4 +7,4 @@ FROM eclipse-temurin:25-jdk
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java","-jar","app.jar"]
