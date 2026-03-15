@@ -30,7 +30,10 @@ pipeline {
 
         stage('Run container') {
             steps {
-                sh "docker run -d --name $CONTAINER_NAME --env-file /srv/docker-images/env/spring.env -e SPRING_PROFILES_ACTIVE=prod -p 8082:8080 $IMAGE_NAME:$IMAGE_TAG"
+                sh """
+                    ENV_ARGS=\$(grep -v '^\$' /opt/env/spring.env | grep -v '^#' | sed 's/^/-e /' | tr '\n' ' ')
+                    docker run -d --name $CONTAINER_NAME \$ENV_ARGS -e SPRING_PROFILES_ACTIVE=prod -p 8082:8080 $IMAGE_NAME:$IMAGE_TAG
+                """
             }
         }
 
