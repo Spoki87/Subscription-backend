@@ -68,11 +68,11 @@ public class ExchangeRateService {
                     .retrieve()
                     .body(NbpRateResponse.class);
 
-            if (response == null || response.getRates() == null) {
+            if (response == null || response.getRates() == null || response.getRates().isEmpty()) {
                 throw new ExchangeRateUnavailableException();
             }
 
-            return response.getRates();
+            return response.getMidRate();
         } catch (ExchangeRateUnavailableException e) {
             throw e;
         } catch (Exception e) {
