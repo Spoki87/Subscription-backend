@@ -3,7 +3,11 @@ package com.pawlak.subscription.subscription.controller;
 import com.pawlak.subscription.response.ApiResponse;
 import com.pawlak.subscription.subscription.dto.request.CreateSubscriptionRequest;
 import com.pawlak.subscription.subscription.dto.request.UpdateSubscriptionRequest;
+import com.pawlak.subscription.subscription.dto.response.SubscriptionByCurrencyResponse;
+import com.pawlak.subscription.subscription.dto.response.SubscriptionByModelResponse;
 import com.pawlak.subscription.subscription.dto.response.SubscriptionResponse;
+import com.pawlak.subscription.subscription.dto.response.SubscriptionSummaryResponse;
+import com.pawlak.subscription.subscription.service.SubscriptionReportService;
 import com.pawlak.subscription.subscription.service.SubscriptionService;
 import com.pawlak.subscription.user.model.User;
 import jakarta.validation.Valid;
@@ -24,6 +28,7 @@ import java.util.UUID;
 public class SubscriptionController {
 
     private final SubscriptionService subscriptionService;
+    private final SubscriptionReportService subscriptionReportService;
 
     @GetMapping()
     public ResponseEntity<ApiResponse<List<SubscriptionResponse>>> getSubscriptionsByUser(@AuthenticationPrincipal User user, @PageableDefault(page = 0, size = 20) Pageable pageable) {
@@ -53,6 +58,21 @@ public class SubscriptionController {
     public ResponseEntity<ApiResponse<Void>> deleteSubscription(@AuthenticationPrincipal User user, @PathVariable UUID id) {
         subscriptionService.deleteSubscriptionById(user, id);
         return ResponseEntity.ok(ApiResponse.success("Subscription deleted"));
+    }
+
+    @GetMapping("/report/summary")
+    public ResponseEntity<ApiResponse<SubscriptionSummaryResponse>> getSummary(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(ApiResponse.success("Summary retrieved", subscriptionReportService.getSummary(user)));
+    }
+
+    @GetMapping("/report/by-model")
+    public ResponseEntity<ApiResponse<List<SubscriptionByModelResponse>>> getByModel(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(ApiResponse.success("Breakdown by model retrieved", subscriptionReportService.getByModel(user)));
+    }
+
+    @GetMapping("/report/by-currency")
+    public ResponseEntity<ApiResponse<List<SubscriptionByCurrencyResponse>>> getByCurrency(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(ApiResponse.success("Breakdown by currency retrieved", subscriptionReportService.getByCurrency(user)));
     }
 
 }
