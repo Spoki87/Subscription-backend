@@ -1,6 +1,7 @@
 package com.pawlak.subscription.user.service;
 
 import com.pawlak.subscription.currency.Currency;
+import com.pawlak.subscription.email.EmailSender;
 import com.pawlak.subscription.exception.domain.InvalidPasswordException;
 import com.pawlak.subscription.exception.domain.UserNotFoundException;
 import com.pawlak.subscription.security.refresh.RefreshTokenService;

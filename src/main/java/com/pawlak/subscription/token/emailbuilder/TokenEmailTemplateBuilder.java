@@ -17,7 +17,7 @@ public class TokenEmailTemplateBuilder {
 
     public String buildConfirmationEmail(String token) {
         Context context = new Context();
-        context.setVariable("URL",basePath+"/api/user/confirm?token="+token);
+        context.setVariable("URL",basePath+"/confirm?token="+token);
         return templateEngine.process("confirm-account", context);
     }
 
