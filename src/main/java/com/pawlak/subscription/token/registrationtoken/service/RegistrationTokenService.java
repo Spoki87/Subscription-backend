@@ -35,6 +35,12 @@ public class RegistrationTokenService {
     }
 
     @Transactional
+    public void resendToken(User user) {
+        registrationTokenRepository.findByUser(user).ifPresent(registrationTokenRepository::delete);
+        createToken(user);
+    }
+
+    @Transactional
     public void confirmRegistration(String token) {
         RegistrationToken registrationToken = registrationTokenRepository.findByToken(token)
                 .orElseThrow(RegistrationTokenNotFoundException::new);

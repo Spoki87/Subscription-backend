@@ -44,6 +44,12 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success("Password changed"));
     }
 
+    @PostMapping("/resend-confirmation")
+    public ResponseEntity<ApiResponse<String>> resendConfirmation(@RequestParam String email) {
+        userService.resendConfirmation(email);
+        return ResponseEntity.ok(ApiResponse.success("Confirmation email resent"));
+    }
+
     @PostMapping("/reset-password")
     public ResponseEntity<ApiResponse<String>> resetPassword(@RequestBody ResetPasswordRequest request){
         userService.resetPassword(request);

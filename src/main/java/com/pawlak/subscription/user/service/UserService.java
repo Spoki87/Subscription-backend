@@ -22,6 +22,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
@@ -41,10 +43,15 @@ public class UserService implements UserDetailsService {
     @Transactional
     public UserResponse register(CreateUserRequest request){
 
-        boolean userExist = userRepository.findByEmail(request.getEmail()).isPresent();
+        Optional<User> existingUser = userRepository.findByEmail(request.getEmail());
 
-        if(userExist){
-            throw new EmailAlreadyTakenException();
+        if (existingUser.isPresent()) {
+            User user = existingUser.get();
+            if (user.isEnabled()) {
+                throw new EmailAlreadyTakenException();
+            }
+            registrationTokenService.resendToken(user);
+            return new UserResponse(user.getId(), user.getEmail(), user.getRole(), user.getCurrency());
         }
 
         User user = new User(
@@ -62,6 +69,15 @@ public class UserService implements UserDetailsService {
                 user.getRole(),
                 user.getCurrency()
         );
+    }
+
+    public void resendConfirmation(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(UserNotFoundException::new);
+        if (user.isEnabled()) {
+            throw new EmailAlreadyTakenException();
+        }
+        registrationTokenService.resendToken(user);
     }
 
     @Transactional
