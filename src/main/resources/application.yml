@@ -59,3 +59,5 @@ rate-limit:
 cleanup:
   refresh-token:
     interval-ms: 3600000
+  inactive-account:
+    interval-ms: 3600000

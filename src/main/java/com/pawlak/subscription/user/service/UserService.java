@@ -46,12 +46,7 @@ public class UserService implements UserDetailsService {
         Optional<User> existingUser = userRepository.findByEmail(request.getEmail());
 
         if (existingUser.isPresent()) {
-            User user = existingUser.get();
-            if (user.isEnabled()) {
-                throw new EmailAlreadyTakenException();
-            }
-            registrationTokenService.resendToken(user);
-            return new UserResponse(user.getId(), user.getEmail(), user.getRole(), user.getCurrency());
+            throw new EmailAlreadyTakenException();
         }
 
         User user = new User(
