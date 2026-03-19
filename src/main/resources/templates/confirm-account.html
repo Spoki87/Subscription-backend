@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirm Your Account</title>
+    <title>Potwierdź swoje konto</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -103,18 +103,18 @@
     </div>
     <hr class="divider">
 
-    <h1>Confirm your account</h1>
-    <p>Thank you for registering. Please click the button below to activate your account.</p>
+    <h1>Potwierdź swoje konto</h1>
+    <p>Dziękujemy za rejestrację. Kliknij poniższy przycisk, aby aktywować swoje konto.</p>
 
-    <a th:href="${URL}" class="btn">Confirm Account</a>
+    <a th:href="${URL}" class="btn" target="_blank">Potwierdź konto</a>
 
     <div class="link-fallback">
-        <p style="margin-bottom: 6px; font-size: 13px; color: #6b6b7b;">If the button doesn't work, copy and paste this link into your browser:</p>
-        <a th:href="${URL}" th:text="${URL}"></a>
+        <p style="margin-bottom: 6px; font-size: 13px; color: #6b6b7b;">Jeśli przycisk nie działa, skopiuj i wklej ten link w przeglądarce:</p>
+        <a th:href="${URL}" th:text="${URL}" target="_blank"></a>
     </div>
 
     <div class="footer">
-        <p>If you did not create an account, you can safely ignore this email.</p>
+        <p>Jeśli nie zakładałeś konta, możesz zignorować tę wiadomość.</p>
     </div>
 </div>
 </body>
