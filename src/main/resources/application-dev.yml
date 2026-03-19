@@ -10,5 +10,4 @@ spring:
 logging:
   level:
     root: INFO
-    org.springframework: DEBUG
     org.hibernate: INFO
